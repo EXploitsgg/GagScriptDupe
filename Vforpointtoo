@@ -1,0 +1,94 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "4.2.3",
+   Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+   LoadingTitle = "By EXploits",
+   LoadingSubtitle = "by !mama",
+   ShowText = "4.2", -- for mobile users to unhide rayfield, change if you'd like
+   Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+
+   ToggleUIKeybind = "K", -- The keybind to toggle the UI visibility (string like "K" or Enum.KeyCode)
+
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
+
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "v4.2"
+   },
+
+   Discord = {
+      Enabled = true, -- Prompt the user to join your Discord server if their executor supports it
+      Invite = "https://discord.gg/KB9uREmaan", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided", -- Use this to tell the user how to get a key
+      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+
+local Tab = Window:CreateTab("Game Stuff", 9764633385) -- Title, Image
+
+local Section = Tab:CreateSection("In-Court")
+
+local Button = Tab:CreateButton({
+    Name = "Play Front-Row as Backrow",
+    Callback = function()
+        local court2 = workspace:FindFirstChild("Court2")
+        if not court2 then
+            warn("wtf contact admins line 49")
+            return
+        end
+
+        -- Delete the specified parts
+        local targets = {"BackrowLF", "NoJumpIndicator", "SideA", "SideB"}
+        for _, name in ipairs(targets) do
+            local part = court2:FindFirstChild(name)
+            if part then
+                part:Destroy()
+                print(name .. " Done")
+            else
+                warn(name .. " Done")
+            end
+        end
+
+        -- Create a full-screen GUI overlay
+        local player = game.Players.LocalPlayer
+        local gui = Instance.new("ScreenGui")
+        gui.Name = "BypassOverlay"
+        gui.ResetOnSpawn = false
+        gui.Parent = player:WaitForChild("PlayerGui")
+
+        local frame = Instance.new("Frame")
+        frame.Size = UDim2.new(1,0,1,0)
+        frame.Position = UDim2.new(0,0,0,0)
+        frame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+        frame.BackgroundTransparency = 0.3
+        frame.Parent = gui
+
+        local label = Instance.new("TextLabel")
+        label.Size = UDim2.new(1,0,1,0)
+        label.Position = UDim2.new(0,0,0,0)
+        label.BackgroundTransparency = 1
+        label.Text = "Bypassing...\n\n> Loading modules...\n> wait...\n>  removing restrictions..."
+        label.TextColor3 = Color3.fromRGB(0,255,0)
+        label.TextScaled = true
+        label.Font = Enum.Font.Code
+        label.Parent = frame
+
+        -- Optional: auto-remove overlay after a few seconds
+        task.delay(3, function()
+            gui:Destroy()
+        end)
+    end,
+})
